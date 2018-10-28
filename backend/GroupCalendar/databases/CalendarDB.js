@@ -1,5 +1,9 @@
 var mysql = require('mysql');
 
+/**
+ * CODE_REVIEW: passwords should not be hardcode
+ * suggest: passing it as an environment variable, process.env
+ */ 
 var db = mysql.createConnection({
   host: 'localhost',
   user: 'root',

@@ -16,12 +16,17 @@ const {OAuth2Client} = require('google-auth-library');
 var CLIENT_ID = "948599028756-qju3o61c2ob60um012tvol60u6p7q6gf.apps.googleusercontent.com";
 // var is_varified = 0;
 
+/** 
+ * CODE_REVIEW: it's totally fine to use async functions, but i would suggest keeping the prototcal of chaining async consistent mostly
+ * mixing async function, promise chain and callback can make the code really difficult to read and debug
+ */
  async function verify(_idToken) {
   const client = new OAuth2Client(CLIENT_ID);
   const ticket = await client.verifyIdToken({
     idToken: _idToken,
     audience: CLIENT_ID, 
   });
+
   //const payload = ticket.getPayload();
   //const userid = payload['sub'];
   // If request specified a G Suite domain:
@@ -60,7 +65,11 @@ exports.auth_google = (req, res) => {
   //   email = google_res.email;
   // });
 
-
+  /** 
+   * CODE_REVIEW: verify and get_info are async functions, you should chain them together with callbacks
+   * or else you will get unpredictable side dehaviours where one runs successfully and one fails
+   * for example get_info_byId should run after update_user completes running successfully
+   */
   User.get_info(email, function(get_err, user_res){
     if(get_err) 
       throw get_err;
@@ -76,12 +85,23 @@ exports.auth_google = (req, res) => {
         user_id = db_res.user_id;
       });
 
+      /**
+       * CODE_REVIEW: this is a totally ok way to concat strings, but i would suggest doing using Template literals
+       * it is a lot easier to read
+       * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+       */
+      var suggestion = `user_name='${user_name}'`;
       var setcmd = "user_name='" + user_name + "'";
       User.update_user(setcmd, user_res.user_id, function(update_err, db_res){
         if(update_err)
           throw update_err;
       });
       
+      /** 
+       * CODE_REVIEW: update_user and get_info_byId are async functions, you should chain them together with callbacks
+       * or else you will get unpredictable side dehaviours where one runs successfully and one fails
+       * for example get_info_byId should run after update_user completes running successfully
+x       */
       User.get_info_byId(user_id, function(get_new_err, db_res){
         if(get_new_err)
           throw get_new_err;
@@ -94,6 +114,11 @@ exports.auth_google = (req, res) => {
       // found the exisiting record
       console.log('Welcome Back');
       var setcmd = "user_name='" + user_name + "'";
+
+      /** 
+       * CODE_REVIEW: update_user is an async function, you should include res.status().json within the callback
+       * or else res.status().json() might be called before update_user finishes, and you get unpredictable behavior 
+x       */
       User.update_user(setcmd, user_res.user_id, function(update_err, db_res){
         if(update_err)
           throw update_err;
