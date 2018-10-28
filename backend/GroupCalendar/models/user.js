@@ -8,11 +8,11 @@ exports.get_info = function(email, res){
 		function (err, sql_res){
 			console.log(email);
 			console.log(sql_res[0]);
-			if(err) 
+			if(err)
 				res(err, null);
 			else if (sql_res.length == 0)
 				res(null, null);
-			else 
+			else
 				res(null, sql_res[0]);
 		});
 };
@@ -24,7 +24,7 @@ exports.update_info = function(info_json, res){
 		db.query(query,
 			function (err, sql_res){
 				console.log(sql_res[0]);
-				if(err) 
+				if(err)
 					res(err, null);
 		});
 		console.log(x);
@@ -34,15 +34,19 @@ exports.update_info = function(info_json, res){
 	res(null, info_json);
 };
 
+/**
+ * CODE_REVIEW: Try to keep your naming conventions consistent.  There are a few parts of the code that are
+ * camelCase, although most are snake_case, but this function is a hybrid of the two.
+ */
 exports.get_info_byId = function(user_id, res){
 	var query = "SELECT * FROM Users WHERE user_id = '" + user_id + "'";
 	db.query(query,
 		function (err, sql_res){
-			if (err) 
+			if (err)
 				res(err, null);
 			else if (sql_res.length == 0)
 				res(null, null);
-			else 
+			else
 				res(null, sql_res);
 		});
 };
@@ -53,7 +57,7 @@ exports.get_info_byId = function(user_id, res){
 // 			if (err) throw err;
 // 			if (sql_res.length == 0)
 // 				res(null);
-// 			else 
+// 			else
 // 				res(sql_res);
 // 		});
 // };
@@ -65,7 +69,7 @@ exports.create_user = function(email, res){
 	var query = "INSERT INTO Users (user_email) VALUES ('" + email + "')";
 	db.query(query,
 		function (err, sql_res){
-			if (err) 
+			if (err)
 				res(err, null);
 
 			user_id = sql_res.insertId;
@@ -86,7 +90,7 @@ exports.update_user = function(setCmd, user_id, res){
 	var query = "UPDATE Users SET " + setCmd + " WHERE user_id=" + user_id;
 	db.query(query,
 		function (err,sql_res){
-			if (err) 
+			if (err)
 				res(err, null);
 			else
 				res(null, sql_res);
