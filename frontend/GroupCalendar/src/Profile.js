@@ -9,6 +9,19 @@ import {Platform, StyleSheet, Text, View, Button, Alert,
 import cs from './common/CommonStyles';
 import Network from './common/GCNetwork'
 
+
+/**
+ * CODE-REVIEW:
+ * - Avoid Magic numbers. For example, color hex values
+ * - Use consistent nameing conventions. For example id_token does not follow camelCases convention
+ * as is followed by the whole doc
+ * - Use white-spaces and line-breaks to improve readability. For example, 
+ * the return value of the render function can be made much readable with good use of line-breaks.
+ * 
+ */
+
+
+
 export default class Profile extends Component {
 	constructor(props) {
 		super(props);

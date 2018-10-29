@@ -10,6 +10,18 @@ import Project from './Project';
 import Search from './Search';
 import { GoogleSignin } from 'react-native-google-signin';
 
+
+/**
+ * CODE-REVIEW:
+ * - Avoid Magic numbers. For example, color hex values
+ * - Use consistent nameing conventions. For example id_token does not follow camelCases convention
+ * as is followed by the whole doc
+ * - Use white-spaces and line-breaks to improve readability. For example, 
+ * the return value of the render function can be made much readable with good use of line-breaks.
+ * 
+ */
+
+
 export default class MainPage extends Component {
 
 	static navigationOptions = {

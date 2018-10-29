@@ -3,6 +3,12 @@
 
 import {StyleSheet} from 'react-native';
 
+/**
+ * CODE-REVIEW : Try to group elements that have common attributes. Example: h1, h2, h3 have
+ * have some common attributes. Try to group them together to avoid code duplication
+ * 
+ */
+
 export default StyleSheet.create({
 	wholePage: {
 		width: '100%',

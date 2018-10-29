@@ -4,6 +4,10 @@ import React, {Component} from 'react';
 import {Alert} from 'react-native';
 import * as config from './../../config.json';
 
+/**
+ * CODE-REVIEW : Avoid pushing dead-code and use good formatting for comments
+ *  Try using comment blocks for method desriptions like this comment
+ */
 
 export default class GCNetwork extends Component {
 
